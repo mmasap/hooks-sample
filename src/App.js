@@ -1,5 +1,8 @@
-function App() {
-  return <div>test</div>;
-}
+import React from 'react';
+import Auth from './feature/auth/containers/Auth';
+
+const App = () => {
+  return <Auth />;
+};
 
 export default App;
