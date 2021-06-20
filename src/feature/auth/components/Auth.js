@@ -1,6 +1,8 @@
 import React, { Fragment, useEffect } from 'react';
 
-const Auth = ({ authStart, auth }) => {
+const Auth = (props) => {
+  const { auth, authStart } = props;
+
   useEffect(() => {
     authStart();
   }, [authStart]);
