@@ -1,14 +1,33 @@
-import React, { Fragment, useEffect, useState, useRef } from 'react';
+import React, {
+  Fragment,
+  useEffect,
+  useState,
+  useRef,
+  useCallback,
+} from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { AUTH_START } from '../../../constants/ActionTypes';
 
 const Auth = (props) => {
   const { auth, authStart } = props;
 
+  const authHook = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+  const dispatchAuthStart = useCallback(
+    () => dispatch({ type: AUTH_START }),
+    [dispatch]
+  );
+
   const [title, setTitle] = useState('');
   const bodyRef = useRef();
 
+  // useEffect(() => {
+  //   authStart();
+  // }, [authStart]);
+
   useEffect(() => {
-    authStart();
-  }, [authStart]);
+    dispatchAuthStart();
+  }, [dispatchAuthStart]);
 
   if (auth.loading) {
     return <div>loading</div>;
@@ -26,8 +45,16 @@ const Auth = (props) => {
 
   return (
     <Fragment>
-      <div>{auth.user.name}</div>
-      <div>{auth.user.email}</div>
+      <div style={{ marginBottom: 10 }}>
+        <div>props</div>
+        <div>{auth.user.name}</div>
+        <div>{auth.user.email}</div>
+      </div>
+      <div style={{ marginBottom: 10 }}>
+        <div>useSelector</div>
+        <div>{authHook.user.name}</div>
+        <div>{authHook.user.email}</div>
+      </div>
       <form onSubmit={sendData}>
         <div>
           <label htmlFor='title'>タイトル</label>
